@@ -4,16 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
 export const Nabvar = ({ saldo }) => {
 
     return (
-        <View style={styles.container}>
+        <View style={styles.colorNabvar}>
             {saldo < 0 ? <Text style={styles.textColor1}> Mi saldo: {saldo}</Text>: <Text style={styles.textColor}> Mi saldo: {saldo}</Text>}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    colorNabvar: {
         position: 'absolute',
-        top: 50,
         backgroundColor: '#000',
         justifyContent: 'center',
         height: 50,

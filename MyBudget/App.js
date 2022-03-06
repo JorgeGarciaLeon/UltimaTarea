@@ -11,9 +11,12 @@ export default function App() {
   const [viewModal, setViewModal] = useState(false);
 
 
-  const deleteTransac = (saldoKey) => {
+  const deleteTransac = (gastos) => {
+
+    setSaldo(parseInt(saldo)-parseInt(gastos.importe))
+
     setListadoGastos((currentGastosList) => {
-      return currentGastosList.filter((gasto) => gasto.key !== saldoKey);
+      return currentGastosList.filter((gasto) => gasto.key !== gastos.key);
     })
   }
 
@@ -55,7 +58,7 @@ export default function App() {
 
       <FlatList data={listadoGastos} renderItem={(gasto) => {
         return (
-          <ShowGastos gasto={gasto.item} />
+          <ShowGastos deleteTransac={deleteTransac} gasto={gasto.item} />
         )
 
       }} />

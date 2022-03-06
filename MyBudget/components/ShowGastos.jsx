@@ -10,13 +10,25 @@ export const ShowGastos = ({ gasto, deleteTransac }) => {
             <Text>Descripción: {descripcion} </Text>
             <Text>Fecha: {fecha} </Text>
 
+            <TouchableOpacity >
+                <View >
+                    <Text >Editar</Text>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => deleteTransac(gasto)}>
+                <View >
+                    <Text >Borrar</Text>
+                </View>
+            </TouchableOpacity>
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     listItem: {
-        marginTop:'30%',
+        marginTop: '30%',
         height: 150,
         width: 200,
         backgroundColor: "orange",

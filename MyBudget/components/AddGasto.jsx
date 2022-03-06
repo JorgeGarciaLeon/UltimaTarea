@@ -1,16 +1,49 @@
 import { StyleSheet, Text, View, Modal, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
-export const AddGasto = ({ viewModal, addGasto }) => {
+export const AddGasto = ({ viewModal, addGasto, modificar, gastoModificar, editarGasto }) => {
 
   const [importe, setImporte] = useState()
   const [descripcion, setDescripcion] = useState()
+  const [key, setKey] = useState()
+  const [date, setDate] = useState()
+  
+
+  const objetoImporte = gastoModificar?.importe
+  const objetoDescription = gastoModificar?.descripcion
+  const objetoKey = gastoModificar?.key
+  const objetoDate = gastoModificar?.fecha
+
+
+  // Importante: Esto de aqui fue explicado por mi compañero de clase debido a que esta
+  // parte de la forma que la intente hacer no fui capaz y mi compañero me explico esta forma de realizarlo.
+
+  useEffect(() => {
+    if (
+      objetoImporte !== importe &&
+      objetoDescription !== descripcion &&
+      objetoKey !== key &&
+      objetoDate !== date   
+    ) {
+      setImporte(objetoImporte);
+      setDescripcion(objetoDescription)
+      setKey(objetoKey)
+      setDate(objetoDate)
+    }
+  }, [objetoImporte, objetoDescription, objetoKey, objetoDate]);
 
   let newGasto = {
     descripcion: '',
     importe: ''
     
+  }
+
+  let modificarGast = {
+    key:'',
+    importe: '',
+    descripcion: '',
+    fecha: ''
   }
 
   const changeImporte = (importe) => {
@@ -22,13 +55,28 @@ export const AddGasto = ({ viewModal, addGasto }) => {
   }
 
   const sendGasto = () => {
-    newGasto = {
-      descripcion: descripcion,
-      importe: importe
-      
-    }
+    if(modificar){
+       modificarGast = {
+        key:key,
+        importe: importe,
+        descripcion: descripcion,
+        fecha: date
+      }
 
-    addGasto(newGasto);
+      editarGasto(modificarGast);
+
+    }else{
+      newGasto = {
+        descripcion: descripcion,
+        importe: importe
+        
+      }
+  
+      addGasto(newGasto);
+      setImporte('');
+      setDescripcion('');
+    }
+    
   }
 
   return (
@@ -53,7 +101,7 @@ export const AddGasto = ({ viewModal, addGasto }) => {
 
         <TouchableOpacity onPress={sendGasto} >
           <View >
-            <Text>Añadir Gasto</Text>
+            <Text>{modificar ? "Modificar Gasto": "Añadir Gasto"}</Text>
           </View>
         </TouchableOpacity>
 

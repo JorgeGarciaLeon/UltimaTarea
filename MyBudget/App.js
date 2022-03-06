@@ -9,6 +9,8 @@ export default function App() {
   const [saldo, setSaldo] = useState(0);
   const [listadoGastos, setListadoGastos] = useState([]);
   const [viewModal, setViewModal] = useState(false);
+  const [modificar, setModificar] = useState(false);
+  const [gastoModificar, setGastoModificar] = useState();
 
 
   const deleteTransac = (gastos) => {
@@ -19,6 +21,17 @@ export default function App() {
       return currentGastosList.filter((gasto) => gasto.key !== gastos.key);
     })
   }
+
+  const editarGasto = (newGasto) => {
+    const id = newGasto.key;
+    const index = listadoGastos.findIndex((gasto) => gasto.key === id);
+    setListadoGastos((gastos) => {
+      return [...gastos.slice(0, index), newGasto, ...gastos.slice(index + 1)];
+    });
+
+    setModificar(false)
+    setViewModal(false)   
+  };
 
 
   const addGasto = (gasto) => {
@@ -45,7 +58,7 @@ export default function App() {
 
 
 
-      <AddGasto viewModal={viewModal} addGasto={addGasto} />
+      <AddGasto editarGasto={editarGasto} gastoModificar={gastoModificar} modificar={modificar} viewModal={viewModal} addGasto={addGasto} />
 
 
 
@@ -58,7 +71,7 @@ export default function App() {
 
       <FlatList data={listadoGastos} renderItem={(gasto) => {
         return (
-          <ShowGastos deleteTransac={deleteTransac} gasto={gasto.item} />
+          <ShowGastos setGastoModificar={setGastoModificar} setViewModal={setViewModal} setModificar={setModificar} deleteTransac={deleteTransac} gasto={gasto.item} />
         )
 
       }} />

@@ -1,8 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export const ShowGastos = ({ gasto, deleteTransac }) => {
+export const ShowGastos = ({ setModificar, gasto, deleteTransac, setViewModal, setGastoModificar }) => {
     const { descripcion, importe, fecha } = gasto;
+
+    const modificar = () =>{
+        setModificar(true);
+        setViewModal(true);
+        setGastoModificar(gasto);
+    }
 
     return (
         <View style={styles.listItem}>
@@ -10,7 +16,7 @@ export const ShowGastos = ({ gasto, deleteTransac }) => {
             <Text>Descripción: {descripcion} </Text>
             <Text>Fecha: {fecha} </Text>
 
-            <TouchableOpacity >
+            <TouchableOpacity onPress={modificar}>
                 <View >
                     <Text >Editar</Text>
                 </View>

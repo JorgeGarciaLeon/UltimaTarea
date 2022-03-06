@@ -3,6 +3,8 @@ import { Nabvar } from './components/Nabvar';
 import { useState } from 'react';
 import { ShowGastos } from './components/ShowGastos';
 import { AddGasto } from './components/AddGasto';
+import Color from './Contants/color'
+
 
 export default function App() {
 
